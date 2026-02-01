@@ -53,18 +53,23 @@ function calculateBonusByProfit(index, total, seller) {
 function analyzeSalesData(data, options) {
   // @TODO: Проверка входных данных
 
-  if (
-    !data ||
-    !Array.isArray(data.sellers) ||
-    data.sellers.lenght === 0 ||
-    !Array.isArray(data.products) ||
-    data.products.lenght === 0 ||
-    !Array.isArray(data.purchase_records) ||
-    data.purchase_records.lenght === 0 
-  ) {
-    throw new Error("Неккоректные данные");
+  if ( Array.isArray(data.sellers) || data.sellers.lenght === 0) {
+    throw new Error(
+      "Неправильные входные данные: проверьте массив sellers"
+    )
   }
 
+    if ( Array.isArray(data.products) || data.products.lenght === 0) {
+    throw new Error(
+      "Неправильные входные данные: проверьте массив products"
+    )
+  }
+
+    if ( Array.isArray(data.purchase_records) || data.purchase_records.lenght === 0) {
+    throw new Error(
+      "Неправильные входные данные: проверьте массив purchase_records"
+    )
+  }
   //проверяем есть ли опции 
 
   if (typeof options !== "object" || options === null) {
@@ -122,13 +127,14 @@ data.purchase_records.forEach(record => { //чек
     const product = productIndex[item.sku]; //товар 
     if (!product) return;
     const cost = product.purchase_price * item.quantity;
-    const revenue = calculateRevenue(item, product);
+    const revenue = calculateRevenue(item);
     const profit = revenue - cost;
     seller.profit += profit;
 
     if (!seller.products_sold[item.sku]) {
       seller.products_sold[item.sku] = 0;
-    }
+    }а нет
+    
 
     seller.products_sold[item.sku] += item.quantity;
   });

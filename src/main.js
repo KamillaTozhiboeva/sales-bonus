@@ -53,23 +53,18 @@ function calculateBonusByProfit(index, total, seller) {
 function analyzeSalesData(data, options) {
   // @TODO: Проверка входных данных
 
-  if ( Array.isArray(data.sellers) || data.sellers.lenght === 0) {
-    throw new Error(
-      "Неправильные входные данные: проверьте массив sellers"
-    )
+ if (
+    !data ||
+    !Array.isArray(data.sellers) ||
+    data.sellers.lenght === 0 ||
+    !Array.isArray(data.products) ||
+    data.products.lenght === 0 ||
+    !Array.isArray(data.purchase_records) ||
+    data.purchase_records.lenght === 0 
+  ) {
+    throw new Error("Неккоректные данные");
   }
 
-    if ( Array.isArray(data.products) || data.products.lenght === 0) {
-    throw new Error(
-      "Неправильные входные данные: проверьте массив products"
-    )
-  }
-
-    if ( Array.isArray(data.purchase_records) || data.purchase_records.lenght === 0) {
-    throw new Error(
-      "Неправильные входные данные: проверьте массив purchase_records"
-    )
-  }
   //проверяем есть ли опции 
 
   if (typeof options !== "object" || options === null) {
@@ -117,9 +112,8 @@ const productIndex = data.products.reduce((acc, product) => {
 data.purchase_records.forEach(record => { //чек
  const seller = sellerIndex[record.seller_id]; //продавец
  if(!seller) return;
- seller.sales_count +=1; //увеличить кол-во продаж
- seller.revenue += record.total_amount; //увеличить общую сумму выручки всех продаж 
-
+ seller.revenue = seller.revenue + record.total_amount //добавляем всю выручку за чек
+ seller.sales_count = seller.sales_count + 1; //увеличиваем колличество продавца на 1
   
   
   //расчёт прибыли для каждого товара 
@@ -133,7 +127,7 @@ data.purchase_records.forEach(record => { //чек
 
     if (!seller.products_sold[item.sku]) {
       seller.products_sold[item.sku] = 0;
-    }а нет
+    }
     
 
     seller.products_sold[item.sku] += item.quantity;

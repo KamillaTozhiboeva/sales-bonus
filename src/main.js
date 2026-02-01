@@ -57,11 +57,11 @@ function analyzeSalesData(data, options) {
  throw new Error ("Некорректные данные или пустой массив sellers")
   }
 
-   if ( !Array.isArray(data.sellers) || data.products.lenght === 0) {
+   if ( !Array.isArray(data.products) || data.products.lenght === 0) {
  throw new Error ("Некорректные данные или пустой массив products")
   }
 
-   if ( !Array.isArray(data.sellers) || data.purchase_records.lenght === 0) {
+   if ( !Array.isArray(data.purchase_records) || data.purchase_records.lenght === 0) {
  throw new Error ("Некорректные данные или пустой массив purchase_records")
   }
   
@@ -112,7 +112,6 @@ const productIndex = data.products.reduce((acc, product) => {
 
 data.purchase_records.forEach(record => { //чек
  const seller = sellerIndex[record.seller_id]; //продавец
- if(!seller) return;
  seller.revenue = seller.revenue + record.total_amount //добавляем всю выручку за чек
  seller.sales_count = seller.sales_count + 1; //увеличиваем колличество продавца на 1
   
@@ -120,7 +119,6 @@ data.purchase_records.forEach(record => { //чек
   //расчёт прибыли для каждого товара 
   record.items.forEach((item) => {
     const product = productIndex[item.sku]; //товар 
-    if (!product) return;
     const cost = product.purchase_price * item.quantity;
     const revenue = calculateRevenue(item);
     const profit = revenue - cost;

@@ -53,17 +53,18 @@ function calculateBonusByProfit(index, total, seller) {
 function analyzeSalesData(data, options) {
   // @TODO: Проверка входных данных
 
- if (
-    !data ||
-    !Array.isArray(data.sellers) ||
-    data.sellers.lenght === 0 ||
-    !Array.isArray(data.products) ||
-    data.products.lenght === 0 ||
-    !Array.isArray(data.purchase_records) ||
-    data.purchase_records.lenght === 0 
-  ) {
-    throw new Error("Неккоректные данные");
+  if ( !Array.isArray(data.sellers) || data.sellers.lenght === 0) {
+ throw new Error ("Некорректные данные или пустой массив sellers")
   }
+
+   if ( !Array.isArray(data.sellers) || data.products.lenght === 0) {
+ throw new Error ("Некорректные данные или пустой массив products")
+  }
+
+   if ( !Array.isArray(data.sellers) || data.purchase_records.lenght === 0) {
+ throw new Error ("Некорректные данные или пустой массив purchase_records")
+  }
+  
 
   //проверяем есть ли опции 
 
@@ -117,7 +118,7 @@ data.purchase_records.forEach(record => { //чек
   
   
   //расчёт прибыли для каждого товара 
-  record.items.forEach(item => {
+  record.items.forEach((item) => {
     const product = productIndex[item.sku]; //товар 
     if (!product) return;
     const cost = product.purchase_price * item.quantity;

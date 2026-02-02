@@ -53,15 +53,15 @@ function calculateBonusByProfit(index, total, seller) {
 function analyzeSalesData(data, options) {
   // @TODO: Проверка входных данных
 
-  if ( !Array.isArray(data.sellers) || data.sellers.lenght === 0) {
+  if ( !Array.isArray(data.sellers) || data.sellers.length === 0) {
  throw new Error ("Некорректные данные или пустой массив sellers")
   }
 
-   if ( !Array.isArray(data.products) || data.products.lenght === 0) {
+   if ( !Array.isArray(data.products) || data.products.length === 0) {
  throw new Error ("Некорректные данные или пустой массив products")
   }
 
-   if ( !Array.isArray(data.purchase_records) || data.purchase_records.lenght === 0) {
+   if ( !Array.isArray(data.purchase_records) || data.purchase_records.length === 0) {
  throw new Error ("Некорректные данные или пустой массив purchase_records")
   }
   
@@ -140,7 +140,7 @@ sellerStats.sort((a, b) => b.profit - a.profit);// сортируем прода
 // @TODO: Назначение премий на основе ранжирования
 
 sellerStats.forEach((seller, index) => {
-  seller.bonus =  calculateBonus(index, sellerStats.lenght, seller);//считаем бонус 
+  seller.bonus =  calculateBonus(index, sellerStats.length, seller);//считаем бонус 
   seller.top_products =Object.entries(seller.products_sold)
   .map(([sku, quantity]) => ({sku, quantity}))
   .sort((a, b) => b.quantity - a.quantity)
@@ -160,3 +160,5 @@ return sellerStats.map((seller) => ({
   }));
 
 }
+
+
